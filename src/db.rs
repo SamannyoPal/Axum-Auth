@@ -140,32 +140,67 @@ impl UserExt for DBClient {
         Ok(user)
     }
 
+    // I have to check form here.
     async fn get_user_count(&self) -> Result<i64, sqlx::Error> {
-        // Implementation here
-        Ok(0)
+        let count = sqlx::query_scalar!(r#"SELECT COUNT(*) as count FROM users"#,)
+            .fetch_one(&self.pool)
+            .await?;
+        Ok(cpunt.unwrap_or(0))
     }
 
+    // I have to check from here.
     async fn update_user_name<T: Into<String> + Send>(
         &self,
         user_id: Uuid,
-        name: T,
+        new_name: T,
     ) -> Result<User, sqlx::Error> {
-        // Implementation here
-        Ok(User::default())
+        let new_name = new_name.into();
+        let user = sqlx::query_as!(
+            User,
+            r#"
+            UPDATE users SET username = $1, updated_at = Now() WHERE id = $2
+            RETURNING id, username, email, password, verified, created_at, updated_at, verification_token, token_expires_at, role as "role: UserRole"
+            "#,
+            new_name,
+            user_id,
+        ).fetch_one(&self.pool).await?;
+        Ok(user)
     }
 
-    async fn update_user_role(&self, user_id: Uuid, role: UserRole) -> Result<User, sqlx::Error> {
-        // Implementation here
-        Ok(User::default())
+    // I have to check from here.
+    async fn update_user_role(
+        &self,
+        user_id: Uuid,
+        new_role: UserRole,
+    ) -> Result<User, sqlx::Error> {
+        let user = sqlx::query_as!(
+            User,
+            r#"
+            UPDATE users SET role = $1, updated_at = Now() WHERE id = $2
+            RETURNING id, username, email, password, verified, created_at, updated_at, verification_token, token_expires_at, role as "role: UserRole"
+            "#,
+            new_role as UserRole,
+            user_id,
+        ).fetch_one(&self.pool).await?;
+        Ok(user)
     }
 
+    //I have to check from here.
     async fn update_user_password(
         &self,
         user_id: Uuid,
-        password: String,
+        new_password: String,
     ) -> Result<User, sqlx::Error> {
-        // Implementation here
-        Ok(User::default())
+        let user = sqlx::query_as!(
+            User,
+            r#"
+            UPDATE users SET password = $1, updated_at = Now() WHERE id = $2
+            RETURNING id, username, email, password, verified, created_at, updated_at, verification_token, token_expires_at, role as "role: UserRole"
+            "#,
+            new_password,
+            user_id,
+        ).fetch_one(&self.pool).await?;
+        Ok(user)
     }
 
     async fn verified_token(&self, token: &str) -> Result<(), sqlx::Error> {
