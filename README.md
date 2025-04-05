@@ -1,2 +1,1 @@
-This is a file sharing Project.
-LANG: RUST
+Authentication using JWT, Axum and PostgreSQL.

@@ -19,12 +19,12 @@ impl UserRole {
 #[derive(Debug, Serialize, Deserialize, Clone, sqlx::FromRow, sqlx::Type)]
 pub struct User {
     pub id: uuid::Uuid,
-    pub name: String,
+    pub username: String,
     pub email: String,
     pub password: String,
     pub role: UserRole,
     pub verified: bool,
-    pub verificattion_token: Option<String>,
+    pub verification_token: Option<String>,
     pub token_expires_at: Option<DateTime<Utc>>,
     #[serde(rename = "createdAt")]
     pub created_at: DateTime<Utc>,

@@ -41,7 +41,7 @@ pub struct LoginUserDto {
     pub password: String,
 }
 
-#[derive(Serialize, Deserialize, Validate)]
+#[derive(Serialize, Deserialize, Validate, Debug, Clone)] //change
 pub struct RequestQueryDto {
     #[validate(range(min = 1))]
     pub page: Option<usize>,
@@ -49,7 +49,7 @@ pub struct RequestQueryDto {
     pub limit: Option<usize>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Validate, Debug, Clone)] //change
 pub struct FilterUserDto {
     pub id: String,
     pub name: String,
@@ -66,7 +66,7 @@ impl FilterUserDto {
     pub fn filter_user(user: &User) -> Self {
         FilterUserDto {
             id: user.id.to_string(),
-            name: user.name.to_owned(),
+            name: user.username.to_owned(),
             email: user.email.to_owned(),
             role: user.role.to_str().to_string(),
             verified: user.verified,
@@ -80,18 +80,18 @@ impl FilterUserDto {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Validate, Debug, Clone)] //change
 pub struct UserData {
     pub user: FilterUserDto,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Validate, Debug, Clone)] //change
 pub struct UserResponseDto {
     pub status: String,
     pub data: UserData,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Validate, Debug, Clone)] //change
 pub struct UserListResponseDto {
     pub status: String,
     pub users: Vec<FilterUserDto>,
@@ -104,7 +104,7 @@ pub struct UserLoginResponseDto {
     pub token: String,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Validate, Debug, Clone)] //change
 pub struct Response {
     pub status: &'static str,
     pub message: String,
@@ -149,7 +149,7 @@ pub struct UserPasswordUpdateDto {
     pub old_password: String,
 }
 
-#[derive(Serialize, Deserialize, Validate)]
+#[derive(Serialize, Deserialize, Validate, Debug, Clone)] // change
 pub struct VerifyEmailQueryDto {
     #[validate(length(min = 1, message = "Token is required"))]
     pub token: String,

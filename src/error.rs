@@ -69,7 +69,7 @@ impl ToString for ErrorMessages {
     }
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone)]
 pub struct HttpError {
     message: String,
     status: StatusCode,
@@ -113,7 +113,7 @@ impl HttpError {
 
     pub fn into_http_response(self) -> Response {
         let json_response = Json(ErrorResponse {
-            status: "Fail".to_string(),
+            status: "fail".to_string(),
             message: self.message.clone(),
         });
         (self.status, json_response).into_response()
