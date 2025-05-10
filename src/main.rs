@@ -3,6 +3,7 @@ mod db;
 mod dtos;
 mod error;
 mod models;
+mod utils;
 
 use axum::{
     http::{
@@ -62,7 +63,7 @@ async fn main() {
         db_client,
     };
 
-    // Initialize the server and routes here
+    // Initialize the server
     let app = axum::Router::new()
         .layer(Extension(app_state))
         .layer(cors.clone());
