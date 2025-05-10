@@ -27,7 +27,7 @@ pub struct User {
     pub verification_token: Option<String>,
     pub token_expires_at: Option<DateTime<Utc>>,
     #[serde(rename = "createdAt")]
-    pub created_at: DateTime<Utc>,
+    pub created_at: Option<DateTime<Utc>>,
     #[serde(rename = "updatedAt")]
-    pub updated_at: DateTime<Utc>,
+    pub updated_at: Option<DateTime<Utc>>,
 }

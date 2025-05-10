@@ -11,7 +11,7 @@ pub struct DBClient {
 }
 
 impl DBClient {
-    pub fn new(Pool: Pool<Postgres>) -> Self {
+    pub fn new(pool: Pool<Postgres>) -> Self {
         DBClient { pool }
     }
 }
@@ -21,11 +21,12 @@ pub trait UserExt {
     async fn get_user(
         &self,
         user_id: Option<Uuid>,
+        name: Option<&str>,
         email: Option<&str>,
         token: Option<&str>,
     ) -> Result<Option<User>, sqlx::Error>;
 
-    async fn get_users(&self, page: u32, limit: usize) -> Result<Vec<user>, sqlx::Error>;
+    async fn get_users(&self, page: u32, limit: usize) -> Result<Vec<User>, sqlx::Error>;
 
     async fn save_user<T: Into<String> + Send>(
         &self,
@@ -145,7 +146,7 @@ impl UserExt for DBClient {
         let count = sqlx::query_scalar!(r#"SELECT COUNT(*) as count FROM users"#,)
             .fetch_one(&self.pool)
             .await?;
-        Ok(cpunt.unwrap_or(0))
+        Ok(count.unwrap_or(0))
     }
 
     // I have to check from here.
