@@ -40,14 +40,14 @@ pub fn decode_token<T: Into<String>>(token: T, secret: &[u8]) -> Result<String, 
     let decode = decode::<TokenClaims>(
         &token.into(),
         &DecodingKey::from_secret(secret),
-        &validation::new(Algorithm::HS256),
+        &Validation::new(Algorithm::HS256),
     );
 
     match decode {
         Ok(token) => Ok(token.claims.sub),
         Err(_) => Err(HttpError::new(
-            ErrorMessage::InvalidToken.to_string(),
-            StatusCode::Unauthorized,
+            ErrorMessages::InvalidToken.to_string(),
+            StatusCode::UNAUTHORIZED,
         )),
     }
 }

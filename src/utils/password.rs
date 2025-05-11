@@ -23,7 +23,7 @@ pub fn hash(password: impl Into<String>) -> Result<String, ErrorMessages> {
         .hash_password(password.as_bytes(), &salt)
         .map_err(|_| ErrorMessages::HashingError)?
         .to_string();
-    OK(hashed_password)
+    Ok(hashed_password)
 }
 
 pub fn compare(password: &str, hashed_password: &str) -> Result<bool, ErrorMessages> {
