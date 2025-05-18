@@ -1,12 +1,11 @@
 use lettre::{
-    message::{header, Singlepart},
+    message::{header, SinglePart},
     transport::smtp::authentication::Credentials,
-    Message::SmtpTransport,
-    Transport,
+    Message, SmtpTransport, Transport,
 };
 use std::{env, fs};
 
-pub async fn send_mail(
+pub async fn send_email(
     to_email: &str,
     subject: &str,
     template_path: &str,

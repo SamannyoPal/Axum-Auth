@@ -1,4 +1,4 @@
-use super::sendmail::send_mail;
+use super::sendmail::send_email;
 
 pub async fn send_verification_email(
     to_email: &str,
