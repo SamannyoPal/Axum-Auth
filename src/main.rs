@@ -2,6 +2,7 @@ mod config;
 mod db;
 mod dtos;
 mod error;
+mod handler;
 mod mail;
 mod middleware;
 mod models;

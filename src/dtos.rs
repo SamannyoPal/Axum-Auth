@@ -6,7 +6,7 @@ use validator::Validate;
 use crate::models::{User, UserRole};
 
 #[derive(Debug, Serialize, Deserialize, Validate, Clone, Default)]
-pub struct RgisterUserDto {
+pub struct RegisterUserDto {
     #[validate(length(min = 1, message = "Name is required"))]
     pub name: String,
     #[validate(
