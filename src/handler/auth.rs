@@ -26,6 +26,15 @@ use crate::{
     AppState,
 };
 
+pub fn auth_handler() -> Router {
+    Router::new()
+        .route("/register", post(register))
+        .route("/login", post(login))
+        .route("/verify-email", get(verify_email))
+        .route("/forgot-password", post(forgot_password))
+        .route("/reset-password", post(reset_password))
+}
+
 pub async fn register(
     Extension(app_state): Extension<Arc<AppState>>,
     Json(body): Json<RegisterUserDto>,

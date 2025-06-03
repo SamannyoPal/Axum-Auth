@@ -6,6 +6,7 @@ mod handler;
 mod mail;
 mod middleware;
 mod models;
+mod routes;
 mod utils;
 
 use axum::{
